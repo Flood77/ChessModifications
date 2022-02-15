@@ -95,34 +95,40 @@ namespace chess
             {
                 // Castle Kingside - roque pequeno
                 Position positionOfRook = new Position(Position.Line, Position.Column + 3);
-                if(testRookToCastle(positionOfRook))
+                if (positionOfRook.Column <= 7)
                 {
-                    Position p1 = new Position(Position.Line, Position.Column + 1);
-                    Position p2 = new Position(Position.Line, Position.Column + 2);
-
-                    if (Board.UniquePiece(p1) == null && Board.UniquePiece(p2) == null)
+                    if (testRookToCastle(positionOfRook))
                     {
-                        mat[Position.Line, Position.Column + 2] = true;
-                    }
-                    {
+                        Position p1 = new Position(Position.Line, Position.Column + 1);
+                        Position p2 = new Position(Position.Line, Position.Column + 2);
 
+                        if (Board.UniquePiece(p1) == null && Board.UniquePiece(p2) == null)
+                        {
+                            mat[Position.Line, Position.Column + 2] = true;
+                        }
+                        {
+
+                        }
                     }
                 }
 
                 // Castle Queenside - roque grande
                 Position positionOfRookQueenSide = new Position(Position.Line, Position.Column - 4);
-                if (testRookToCastle(positionOfRookQueenSide))
+                if (positionOfRookQueenSide.Column >= 0)
                 {
-                    Position p1 = new Position(Position.Line, Position.Column - 1);
-                    Position p2 = new Position(Position.Line, Position.Column - 2);
-                    Position p3 = new Position(Position.Line, Position.Column - 3);
-
-                    if (Board.UniquePiece(p1) == null && Board.UniquePiece(p2) == null && Board.UniquePiece(p3) == null)
+                    if (testRookToCastle(positionOfRookQueenSide))
                     {
-                        mat[Position.Line, Position.Column - 2] = true;
-                    }
-                    {
+                        Position p1 = new Position(Position.Line, Position.Column - 1);
+                        Position p2 = new Position(Position.Line, Position.Column - 2);
+                        Position p3 = new Position(Position.Line, Position.Column - 3);
 
+                        if (Board.UniquePiece(p1) == null && Board.UniquePiece(p2) == null && Board.UniquePiece(p3) == null)
+                        {
+                            mat[Position.Line, Position.Column - 2] = true;
+                        }
+                        {
+
+                        }
                     }
                 }
             }

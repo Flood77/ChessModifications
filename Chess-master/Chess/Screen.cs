@@ -108,7 +108,8 @@ namespace Chess
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
-            char column = s[0];
+            string columnStr = s[0].ToString();
+            char column = columnStr.ToLower().ToCharArray()[0];
             int line = int.Parse(s[1] + "");
             return new ChessPosition(column, line);
         }

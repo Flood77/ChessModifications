@@ -1,4 +1,5 @@
 ﻿using board;
+using System;
 using System.Collections.Generic;
 
 namespace chess
@@ -15,7 +16,7 @@ namespace chess
         private HashSet<Piece> Pieces;
         private HashSet<Piece> CapturedPieces;
 
-        public ChessMatch()
+        public ChessMatch(int mode = 0)
         {
             BoardOfMatch = new Board(8, 8);
             Turn = 1;
@@ -25,7 +26,14 @@ namespace chess
             VulnerableEnPassant = null;
             Pieces = new HashSet<Piece>();
             CapturedPieces = new HashSet<Piece>();
-            PutPieces();
+            if(mode == 0)
+            {
+                PutPieces();
+            }
+            else if(mode == 1)
+            {
+                PutPiecesSpecial();
+            }
         }
 
         public Piece ExecuteMoviment(Position origin, Position destiny)
@@ -363,6 +371,123 @@ namespace chess
             PutNewPiece('f', 8, new Bishop(Color.Black, BoardOfMatch));
             PutNewPiece('g', 8, new Horse(Color.Black, BoardOfMatch));
             PutNewPiece('h', 8, new Rook(Color.Black, BoardOfMatch));
+            PutNewPiece('a', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('b', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('c', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('d', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('e', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('f', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('g', 7, new Pawn(Color.Black, BoardOfMatch, this));
+            PutNewPiece('h', 7, new Pawn(Color.Black, BoardOfMatch, this));
+        }
+
+        private void PutPiecesSpecial()
+        {
+            List<char> whiteSpaces = new List<char>() { 'a','b','c','d','e','f','g','h' };
+            List<char> blackSpaces = new List<char>() { 'a','b','c','d','e','f','g','h' };
+            Random rand = new Random();
+            int place = 0;
+
+            //place black space bishop
+            place = rand.Next(4) * 2;
+            PutNewPiece(whiteSpaces[place], 1, new Bishop(Color.White, BoardOfMatch));
+            whiteSpaces.RemoveAt(place);
+
+            //place white space bishop
+            place = rand.Next(4);
+            place = rand.Next(4);
+            char placement = ' ';
+            switch (place)
+            {
+                case 0:
+                    placement = 'b';
+                    break;
+                case 1:
+                    placement = 'd';
+                    break;
+                case 2:
+                    placement = 'f';
+                    break;
+                case 3:
+                    placement = 'h';
+                    break;
+            }
+            PutNewPiece(placement, 1, new Bishop(Color.White, BoardOfMatch));
+            whiteSpaces.Remove(placement);
+
+            //place Knights Randomly
+            place = rand.Next(whiteSpaces.Count);
+            PutNewPiece(whiteSpaces[place], 1, new Horse(Color.White, BoardOfMatch));
+            whiteSpaces.RemoveAt(place);
+            place = rand.Next(whiteSpaces.Count);
+            PutNewPiece(whiteSpaces[place], 1, new Horse(Color.White, BoardOfMatch));
+            whiteSpaces.RemoveAt(place);
+
+            //place Queen Randomly
+            place = rand.Next(whiteSpaces.Count);
+            PutNewPiece(whiteSpaces[place], 1, new Queen(Color.White, BoardOfMatch));
+            whiteSpaces.RemoveAt(place);
+
+            //place King and Rooks based on remaining spots
+            PutNewPiece(whiteSpaces[0], 1, new Rook(Color.White, BoardOfMatch));
+            PutNewPiece(whiteSpaces[1], 1, new King(Color.White, BoardOfMatch, this));
+            PutNewPiece(whiteSpaces[2], 1, new Rook(Color.White, BoardOfMatch));
+
+            //place white pawns
+            PutNewPiece('a', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('b', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('c', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('d', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('e', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('f', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('g', 2, new Pawn(Color.White, BoardOfMatch, this));
+            PutNewPiece('h', 2, new Pawn(Color.White, BoardOfMatch, this));
+
+            //place white space bishop
+            place = rand.Next(4) * 2;
+            PutNewPiece(blackSpaces[place], 8, new Bishop(Color.Black, BoardOfMatch));
+            blackSpaces.RemoveAt(place);
+
+            //place black space bishop
+            place = rand.Next(4);
+            place = rand.Next(4);
+            switch (place)
+            {
+                case 0:
+                    placement = 'b';
+                    break;
+                case 1:
+                    placement = 'd';
+                    break;
+                case 2:
+                    placement = 'f';
+                    break;
+                case 3:
+                    placement = 'h';
+                    break;
+            }
+            PutNewPiece(placement, 8, new Bishop(Color.Black, BoardOfMatch));
+            blackSpaces.Remove(placement);
+
+            //place Knights Randomly
+            place = rand.Next(blackSpaces.Count);
+            PutNewPiece(blackSpaces[place], 8, new Horse(Color.Black, BoardOfMatch));
+            blackSpaces.RemoveAt(place);
+            place = rand.Next(blackSpaces.Count);
+            PutNewPiece(blackSpaces[place], 8, new Horse(Color.Black, BoardOfMatch));
+            blackSpaces.RemoveAt(place);
+
+            //place Queen Randomly
+            place = rand.Next(blackSpaces.Count);
+            PutNewPiece(blackSpaces[place], 8, new Queen(Color.Black, BoardOfMatch));
+            blackSpaces.RemoveAt(place);
+
+            //place King and Rooks based on remaining spots
+            PutNewPiece(blackSpaces[0], 8, new King(Color.Black, BoardOfMatch, this));
+            PutNewPiece(blackSpaces[1], 8, new Rook(Color.Black, BoardOfMatch));
+            PutNewPiece(blackSpaces[2], 8, new Rook(Color.Black, BoardOfMatch));
+
+            //place black pawns
             PutNewPiece('a', 7, new Pawn(Color.Black, BoardOfMatch, this));
             PutNewPiece('b', 7, new Pawn(Color.Black, BoardOfMatch, this));
             PutNewPiece('c', 7, new Pawn(Color.Black, BoardOfMatch, this));

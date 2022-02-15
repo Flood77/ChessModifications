@@ -8,49 +8,33 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            try
-            {
-                ChessMatch match = new ChessMatch();
+            Game g = new Game();
+            string gamemode;
 
-                while (!match.Ended)
+            Console.WriteLine("Welcome to Chess");
+            Console.WriteLine("Please choose a game mode");
+            Console.WriteLine("Select s for standard chess");
+            Console.WriteLine("or c for Chess960");
+            gamemode = Console.ReadLine();
+            
+            bool correct = false;
+            do {
+                switch (gamemode.ToLower())
                 {
-                    try
-                    {
-                        Console.Clear();
-                        Screen.PrintMatch(match);
-
-                        Console.WriteLine();
-
-                        Console.Write("Origin: ");
-                        Position origin = Screen.ReadChessPosition().ToPosition();
-
-                        match.ValidateOriginPosition(origin);
-
-                        bool[,] possiblePositions = match.BoardOfMatch.UniquePiece(origin).PossibleMoviments();
-
-                        Console.Clear();
-                        Screen.PrintBoard(match.BoardOfMatch, possiblePositions);
-
-                        Console.WriteLine();
-                        Console.Write("Destiny: ");
-                        Position destiny = Screen.ReadChessPosition().ToPosition();
-                        match.ValidateDestinyPosition(origin, destiny);
-
-                        match.PerformPlay(origin, destiny);
-                    } catch (BoardException e)
-                    {
-                        Console.WriteLine(e.Message);
-                        Console.ReadLine();
-                    }
+                    case "s":
+                        g.Standard();
+                        correct = true;
+                        break;
+                    case "c":
+                        g.Chess960();
+                        correct = true;
+                        break;
+                    default:
+                        Console.WriteLine("I'm sorry but that was not a correct input, try again");
+                        gamemode = Console.ReadLine();
+                        break;
                 }
-                Console.Clear();
-                Screen.PrintMatch(match);
-            }
-            catch (BoardException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
+            } while (!correct);
             Console.ReadLine();
         }
     }
