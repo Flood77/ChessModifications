@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace chess
 {
-    class ChessMatch
+    public class ChessMatch
     {
         public Board BoardOfMatch { get; private set; }
         public int Turn { get; private set; }
@@ -13,6 +13,7 @@ namespace chess
         public bool Check { get; private set; }
         public Piece VulnerableEnPassant { get; private set; }
 
+        public List<Piece> testList = new List<Piece>();
         private HashSet<Piece> Pieces;
         private HashSet<Piece> CapturedPieces;
 
@@ -342,6 +343,7 @@ namespace chess
         {
             BoardOfMatch.PutPiece(piece, new ChessPosition(column, line).ToPosition());
             Pieces.Add(piece);
+            testList.Add(piece);
         }
 
         private void PutPieces()

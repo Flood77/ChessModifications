@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace chess
 {
-    class Pawn : Piece
+    public class Pawn : Piece
     {
         private ChessMatch Match;
 

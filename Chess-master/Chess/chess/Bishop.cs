@@ -2,7 +2,7 @@
 
 namespace chess
 {
-    class Bishop : Piece
+    public class Bishop : Piece
     {
         public Bishop(Color color, Board board) : base(color, board)
         {

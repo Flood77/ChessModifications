@@ -4,7 +4,7 @@ using board;
 
 namespace Chess
 {
-    class Game
+    public class Game
     {
 
         public void Standard()
